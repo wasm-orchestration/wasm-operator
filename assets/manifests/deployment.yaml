@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n-body
+  namespace: webassembly
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: n-body
+  template:
+    metadata:
+      # TODO: These labels need to be customized
+      labels:
+        app: n-body
+      name: n-body
+    spec:
+      hostNetwork: true
+      runtimeClassName: spin
+      imagePullSecrets:
+        - name: artifacts-wasm-registry
+      containers:
+        - image: artifacts.apps.mrezhi.net/wasm/spin/n-body:latest
+          command:
+            - /
+          name: n-body
+#          ports:
+#            - containerPort: 80
+#              name: web
+#              protocol: TCP

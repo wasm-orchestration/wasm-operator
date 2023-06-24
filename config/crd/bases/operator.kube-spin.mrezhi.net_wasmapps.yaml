@@ -1,0 +1,70 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.10.0
+  creationTimestamp: null
+  name: wasmapps.operator.kube-spin.mrezhi.net
+spec:
+  group: operator.kube-spin.mrezhi.net
+  names:
+    kind: WasmApp
+    listKind: WasmAppList
+    plural: wasmapps
+    singular: wasmapp
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: WasmApp is the Schema for the wasmapps API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WasmAppSpec defines the desired state of WasmApp
+            properties:
+              imagePullSecret:
+                type: string
+              ingressClass:
+                type: string
+              ingressEnabled:
+                type: boolean
+              ingressHost:
+                type: string
+              ingressTlsEnabled:
+                type: boolean
+              ociImage:
+                type: string
+              ociImageTag:
+                type: string
+              outboundHttp:
+                type: boolean
+              replicas:
+                format: int32
+                type: integer
+              runtimeClass:
+                type: string
+            required:
+            - ociImage
+            - ociImageTag
+            type: object
+          status:
+            description: WasmAppStatus defines the observed state of WasmApp
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location = /robots.txt {
+        add_header Content-Type text/plain;
+        return 200 "User-agent: *\nDisallow: /\n";
+      }
+  name: n-body
+  namespace: webassembly
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: n-body.l26.mrezhi.net
+      http:
+        paths:
+          - backend:
+              service:
+                name: n-body
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - n-body.l26.mrezhi.net
